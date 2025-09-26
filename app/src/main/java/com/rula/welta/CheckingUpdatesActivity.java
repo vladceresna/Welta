@@ -33,12 +33,7 @@ public class CheckingUpdatesActivity extends AppCompatActivity {
         tactvers = findViewById(R.id.tactvers);
         reference = FirebaseDatabase.getInstance().getReference();
 
-        butdownload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, uri));
-            }
-        });
+        butdownload.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, uri)));
 
         reference.child("welta").child("lastVersion").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -49,9 +44,9 @@ public class CheckingUpdatesActivity extends AppCompatActivity {
                 twhatsnew.setText(versionView.getWhatsnew());
                 String versionName = BuildConfig.VERSION_NAME;
                 if (versionName.equals(versionView.getVersion())){
-                    tactvers.setText("Вы используете\nактуальную версию");
+                    tactvers.setText("You is using\nactual version");
                 }else{
-                    tactvers.setText("Вы используете не самую\nактуальную версию.\nНекоторые функции могут работать со сбоями");
+                    tactvers.setText("You isn`t using \nactual version.\nSome features may work with errors");
                 }
             }
             @Override

@@ -13,7 +13,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Обновления"
+            app:title="Updates"
             app:titleTextColor="@color/white"
             />
     </com.google.android.material.appbar.AppBarLayout>
@@ -31,7 +31,7 @@
                 android:padding="20dp"
                 android:textSize="20dp"
                 android:textColor="@color/black"
-                android:text="Вы используете\nактуальную версию"
+                android:text="You are using an actual version"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -44,19 +44,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:text="Актуальный выпуск"
+                    android:text="Actual release"
                     android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_marginTop="10dp"
-                    android:text="Версия"
+                    android:text="Version"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/tversion"
-                    android:text="0.1"
+                    android:text="0.5"
                     android:textSize="20dp"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
@@ -69,11 +69,11 @@
                     android:layout_height="wrap_content">
                     <TextView
 
-                        android:text="Установочный файл"
+                        android:text="Installer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:text="Скачать"
+                        android:text="Download"
                         android:textSize="20dp"
                         android:textColor="@color/black"
                         android:layout_width="match_parent"
@@ -81,12 +81,12 @@
                 </LinearLayout>
                 <TextView
                     android:layout_marginTop="10dp"
-                    android:text="Что нового"
+                    android:text="What`s new?"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/twhatsnew"
-                    android:text="Обновлено время"
+                    android:text="Updates time"
                     android:textSize="20dp"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"

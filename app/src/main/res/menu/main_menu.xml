@@ -3,29 +3,29 @@
     <item
         android:id="@+id/actfil"
         android:icon="@drawable/ic_baseline_filter_list_24"
-        android:title="Популярные фильтры"
-        android:contentDescription="Популярные фильтры"
+        android:title="Popular filters"
+        android:contentDescription="Popular filters"
         app:showAsAction="always" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="Профиль"
-        android:contentDescription="Профиль"
+        android:title="Profile"
+        android:contentDescription="Profile"
         app:showAsAction="always" />
     <item
         android:id="@+id/checkupd"
-        android:title="Проверить обновления"
-        android:contentDescription="Проверить обновления"
+        android:title="Check updates"
+        android:contentDescription="Check updates"
         app:showAsAction="never" />
     <item
         android:id="@+id/abouti"
-        android:title="О программе"
-        android:contentDescription="О программе"
+        android:title="About"
+        android:contentDescription="About"
         app:showAsAction="never" />
     <item
         android:id="@+id/exitacc"
-        android:title="Выйти"
-        android:contentDescription="Выйти"
+        android:title="Log out"
+        android:contentDescription="Log out"
         app:showAsAction="never" />
 
 </menu>

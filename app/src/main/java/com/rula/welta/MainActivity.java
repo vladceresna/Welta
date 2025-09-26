@@ -79,20 +79,10 @@ public class MainActivity extends AppCompatActivity {
                 if (!snapshot.getValue(Boolean.class)){
 
                     new MaterialAlertDialogBuilder(MainActivity.this)
-                            .setTitle("Поддержка закончена")
-                            .setMessage("Эта версия не актуальная, поэтому больше не поддерживается. Если работа приложения долгое время не восстановлена, то рекомендуем скачать актуальную версию с нашего официального сайта rulav.repl.co")
-                            .setPositiveButton("Хорошо", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    finishAffinity();
-                                }
-                            })
-                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    finishAffinity();
-                                }
-                            })
+                            .setTitle("Support has ended")
+                            .setMessage("This version is outdated and no longer supported. If the application does not resume working after a long time, we recommend downloading the latest version from our official website https://retrula.netlify.app/")
+                            .setPositiveButton("Okay", (dialogInterface, i) -> finishAffinity())
+                            .setOnDismissListener(dialogInterface -> finishAffinity())
                             .show();
                 }else{
                     butpp = findViewById(R.id.butpp);
@@ -122,102 +112,76 @@ public class MainActivity extends AppCompatActivity {
                         scrview.setBackground(getDrawable(R.drawable.backf2));
                     }
 
-                    butpp.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            tosite("https://rulav.repl.co/privacypolicy/rulaprivacypolicy.html");
+                    butpp.setOnClickListener(view -> tosite("https://retrula.netlify.app/privacypolicy/rulaprivacypolicy.html"));
+                    buttu.setOnClickListener(view -> tosite("https://retrula.netlify.app/terms/rulaterms.html"));
+
+                    komprenis.setOnClickListener(view -> {
+                        if (regscr) {
+                            aptempt.setVisibility(View.GONE);
+
+                            inputmail.setVisibility(View.VISIBLE);
+                            inputpassword.setVisibility(View.VISIBLE);
+                            buttonup.setVisibility(View.VISIBLE);
+                            buttondown.setVisibility(View.VISIBLE);
+                            desctext.setVisibility(View.VISIBLE);
+
+                            desctext.setText("Do you have an account?");
+                            buttondown.setText("Sing in");
+                            buttonup.setText("Registration");
+                            vmarg.setVisibility(View.VISIBLE);
+                            inputname.setVisibility(View.VISIBLE);
+                            inputrepassword.setVisibility(View.VISIBLE);
+                            inputid.setVisibility(View.VISIBLE);
+
                         }
                     });
-                    buttu.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            tosite("https://rulav.repl.co/terms/rulaterms.html");
+                    buttondown.setOnClickListener(view -> {
+                        if((regscr)){
+                            desctext.setText("Do you have an account?");
+                            buttondown.setText("Registration");
+                            buttonup.setText("Sign in");
+                            vmarg.setVisibility(View.GONE);
+                            inputname.setVisibility(View.GONE);
+                            inputrepassword.setVisibility(View.GONE);
+                            inputid.setVisibility(View.GONE);
+                            regscr = false;
+                        }else{
+                            aptempt.setVisibility(View.VISIBLE);
+                            inputmail.setVisibility(View.GONE);
+                            inputpassword.setVisibility(View.GONE);
+                            buttonup.setVisibility(View.GONE);
+                            buttondown.setVisibility(View.GONE);
+                            desctext.setVisibility(View.GONE);
+
+                            regscr = true;
                         }
                     });
+                    buttonup.setOnClickListener(view -> {
 
-                    komprenis.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (regscr) {
-                                aptempt.setVisibility(View.GONE);
-
-                                inputmail.setVisibility(View.VISIBLE);
-                                inputpassword.setVisibility(View.VISIBLE);
-                                buttonup.setVisibility(View.VISIBLE);
-                                buttondown.setVisibility(View.VISIBLE);
-                                desctext.setVisibility(View.VISIBLE);
-
-                                desctext.setText("У вас уже есть аккаунт?");
-                                buttondown.setText("Вход");
-                                buttonup.setText("Зарегистрироваться");
-                                vmarg.setVisibility(View.VISIBLE);
-                                inputname.setVisibility(View.VISIBLE);
-                                inputrepassword.setVisibility(View.VISIBLE);
-                                inputid.setVisibility(View.VISIBLE);
-
+                        if (regscr){
+                            if(inputid.getText().toString().equals("")) {
+                                Toast.makeText(MainActivity.this, "Fill RulaID", Toast.LENGTH_LONG).show();
+                            }else if (inputmail.getText().toString().equals("")){
+                                Toast.makeText(MainActivity.this, "Fill email", Toast.LENGTH_LONG).show();
+                            }else if (inputpassword.getText().toString().equals("")){
+                                Toast.makeText(MainActivity.this, "Fill password", Toast.LENGTH_LONG).show();
+                            }else if (inputrepassword.getText().toString().equals("")){
+                                Toast.makeText(MainActivity.this, "Fill submit password", Toast.LENGTH_LONG).show();
+                            }else if (inputname.getText().toString().equals("")){
+                                Toast.makeText(MainActivity.this, "Fill name", Toast.LENGTH_LONG).show();
                             }
-                        }
-                    });
-                    buttondown.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View view) {
-                            // нажатие нижней кнопки, она может быть как для того чтобы перейти на "экран" входа,
-                            // когда человек видит "экран" регистрации, так и наоборот
-                            if((regscr)){
-                                // меняем "экраны"
-                                // если нужно войти
-                                desctext.setText("У вас еще нет аккаунта?");
-                                buttondown.setText("Регистрация");
-                                buttonup.setText("Войти");
-                                vmarg.setVisibility(View.GONE);
-                                inputname.setVisibility(View.GONE);
-                                inputrepassword.setVisibility(View.GONE);
-                                inputid.setVisibility(View.GONE);
-                                regscr = false;
-                            }else{
-                                // если нужно зарегаться
-                                aptempt.setVisibility(View.VISIBLE);
-                                inputmail.setVisibility(View.GONE);
-                                inputpassword.setVisibility(View.GONE);
-                                buttonup.setVisibility(View.GONE);
-                                buttondown.setVisibility(View.GONE);
-                                desctext.setVisibility(View.GONE);
+                            else{
 
-                                regscr = true;
+                                createUser(inputmail.getText().toString(), inputpassword.getText().toString());
                             }
-                        }
-                    });
-                    buttonup.setOnClickListener(new View.OnClickListener() {
-                        // нажатие верхней кнопки, она может быть как для регистрации,
-                        // когда человек видит "экран" регистрации, так и наоборот с входом
-                        @Override
-                        public void onClick(View view) {
-
-                            if (regscr){
-                                if(inputid.getText().toString().equals("")) {
-                                    Toast.makeText(MainActivity.this, "Заполните RulaID", Toast.LENGTH_LONG).show();
-                                }else if (inputmail.getText().toString().equals("")){
-                                    Toast.makeText(MainActivity.this, "Заполните почту", Toast.LENGTH_LONG).show();
-                                }else if (inputpassword.getText().toString().equals("")){
-                                    Toast.makeText(MainActivity.this, "Заполните пароль", Toast.LENGTH_LONG).show();
-                                }else if (inputrepassword.getText().toString().equals("")){
-                                    Toast.makeText(MainActivity.this, "Заполните поле повтора пароль", Toast.LENGTH_LONG).show();
-                                }else if (inputname.getText().toString().equals("")){
-                                    Toast.makeText(MainActivity.this, "Заполните имя", Toast.LENGTH_LONG).show();
-                                }
-                                else{
-
-                                    createUser(inputmail.getText().toString(), inputpassword.getText().toString());
-                                }
-                            }else{
-                                if(inputmail.getText().toString().equals("")) {
-                                    Toast.makeText(MainActivity.this, "Заполните почту", Toast.LENGTH_LONG).show();
-                                }else if (inputpassword.getText().toString().equals("")){
-                                    Toast.makeText(MainActivity.this, "Заполните пароль", Toast.LENGTH_LONG).show();
-                                }
-                                else{
-                                    signIn(inputmail.getText().toString(), inputpassword.getText().toString());
-                                }
+                        }else{
+                            if(inputmail.getText().toString().equals("")) {
+                                Toast.makeText(MainActivity.this, "Fill email", Toast.LENGTH_LONG).show();
+                            }else if (inputpassword.getText().toString().equals("")){
+                                Toast.makeText(MainActivity.this, "Fill password", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                signIn(inputmail.getText().toString(), inputpassword.getText().toString());
                             }
                         }
                     });
@@ -231,61 +195,44 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void createUser(String email, String password){
-        //регистрация юзера
         Auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // когда юзер успешно зарегистрирован
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = Auth.getCurrentUser();
-                            //задаем отображаемое имя в userauth
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(inputname.getText().toString()).build();
-                            user.updateProfile(profileUpdates)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                //если успешно, то записываем пользователя
-                                                Log.d(TAG, "User profile updated.");
-                                                writeNewUser(user.getDisplayName(), inputid.getText().toString(), user.getUid());
-                                                startActivity(new Intent(MainActivity.this , PrimaryActivity.class));
-                                                finish();
-                                            }
-                                        }
-                                    });
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "createUserWithEmail:success");
+                        FirebaseUser user = Auth.getCurrentUser();
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(inputname.getText().toString()).build();
+                        user.updateProfile(profileUpdates)
+                                .addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
+                                        Log.d(TAG, "User profile updated.");
+                                        writeNewUser(user.getDisplayName(), inputid.getText().toString(), user.getUid());
+                                        startActivity(new Intent(MainActivity.this , PrimaryActivity.class));
+                                        finish();
+                                    }
+                                });
 
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(MainActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
 
     }
     private void signIn(String email, String password){
         Auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = Auth.getCurrentUser();
-                            startActivity(new Intent(MainActivity.this, PrimaryActivity.class));
-                            finish();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "signInWithEmail:success");
+                        FirebaseUser user = Auth.getCurrentUser();
+                        startActivity(new Intent(MainActivity.this, PrimaryActivity.class));
+                        finish();
+                    } else {
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(MainActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
 

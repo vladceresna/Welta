@@ -20,8 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,7 +34,6 @@ import com.rula.welta.adapters.PostAdapter;
 import com.rula.welta.obj.Post;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PrimaryActivity extends AppCompatActivity {
 
@@ -79,154 +76,125 @@ public class PrimaryActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
 
         FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("id").get()
-                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error getting data", task.getException());
-                        } else {
-                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                            id = String.valueOf(task.getResult().getValue());
-                            reference.child("welta").child("chat").addChildEventListener(childEventListener());
-                        }
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    } else {
+                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                        id = String.valueOf(task.getResult().getValue());
+                        reference.child("welta").child("chat").addChildEventListener(childEventListener());
                     }
                 });
 
-        filchabut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listView.setAdapter(null);
-                allposts.clear();
-                posts.clear();
-                reference.child("welta").child("chat").addChildEventListener(childEventListener());
+        filchabut.setOnClickListener(view -> {
+            listView.setAdapter(null);
+            allposts.clear();
+            posts.clear();
+            reference.child("welta").child("chat").addChildEventListener(childEventListener());
 
-            }
         });
 
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.profile:
-                        if(rostoest) {
-                            startActivity(new Intent().setClassName("com.rula.rosto", "com.rula.rosto.ProfileActivity"));
-                        }else{
-                            new MaterialAlertDialogBuilder(PrimaryActivity.this)
-                                    .setTitle("Приложение Rosto не обнаружено")
-                                    .setMessage("Приложение Rosto нужно для нормального функционирования ретсистемы Rula. В нем находятся общие функции системы, такие как действия с профилями, и т.д. Установить его можна с нашего официального сайта rulav.repl.co")
-                                    .setPositiveButton("Хорошо", null).show();
-                        }
-                        return true;
-                    case R.id.checkupd:
-                        startActivity(new Intent(PrimaryActivity.this,CheckingUpdatesActivity.class));
-                        return true;
-                    case R.id.abouti:
-                        startActivity(new Intent(PrimaryActivity.this,AboutActivity.class));
-                        return true;
-                    case R.id.exitacc:
+        toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()){
+                case R.id.profile:
+                    if(rostoest) {
+                        startActivity(new Intent().setClassName("com.rula.rosto", "com.rula.rosto.ProfileActivity"));
+                    }else{
                         new MaterialAlertDialogBuilder(PrimaryActivity.this)
-                                .setTitle("Really?")
-                                .setMessage("Вы выйдете из аккаунта только в этом сервисе. Чтобы все сервисы Rula работали корректно, нужно чтобы во всех них был выполнен вход под одним и тем же аккаунтом. Вы действительно хотите выйти из вашего аккаунта?")
-                                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        FirebaseAuth.getInstance().signOut();
-                                        finishAffinity();
-                                    }
-                                })
-                                .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {}
-                                }).show();
-                        return true;
-                    case R.id.actfil:
-                        ArrayList<String> filers = new ArrayList<>();
-                        for (int x = allposts.toArray().length-1; x>=0;x--){
-                            if (!filers.contains(allposts.get(x).getFilters())) {
-                                filers.add(allposts.get(x).getFilters());
-                            }
+                                .setTitle("Rosto application not found")
+                                .setMessage("The Rosto application is required for the normal functioning of the Rula ret system. It contains general system functions, such as profile management, etc. You can install it from our official website https://retrula.netlify.app/")
+                                .setPositiveButton("Okay", null).show();
+                    }
+                    return true;
+                case R.id.checkupd:
+                    startActivity(new Intent(PrimaryActivity.this,CheckingUpdatesActivity.class));
+                    return true;
+                case R.id.abouti:
+                    startActivity(new Intent(PrimaryActivity.this,AboutActivity.class));
+                    return true;
+                case R.id.exitacc:
+                    new MaterialAlertDialogBuilder(PrimaryActivity.this)
+                            .setTitle("Really?")
+                            .setMessage("You will only log out of this service. For all Rula services to work correctly, you must be logged in with the same account on all of them. Are you sure you want to log out of your account?")
+                            .setPositiveButton("Yes", (dialogInterface, i) -> {
+                                FirebaseAuth.getInstance().signOut();
+                                finishAffinity();
+                            })
+                            .setNegativeButton("Cancel", (dialogInterface, i) -> {}).show();
+                    return true;
+                case R.id.actfil:
+                    ArrayList<String> filers = new ArrayList<>();
+                    for (int x = allposts.toArray().length-1; x>=0;x--){
+                        if (!filers.contains(allposts.get(x).getFilters())) {
+                            filers.add(allposts.get(x).getFilters());
                         }
-                        String str = "";
-                        String str1 = "";
-                        boolean start = true;
-                        for (String f:filers){
-                            if (f.equals("")){
-                                if (start){
-                                    start = false;
-                                    str += "Основной";
-                                    str1 += "_";
-                                }else {
-                                    str += "#!"+"Основной";
-                                    str1 += "#!"+"_";
-                                }
-                            }else if (start){
+                    }
+                    String str = "";
+                    String str1 = "";
+                    boolean start = true;
+                    for (String f:filers){
+                        if (f.equals("")){
+                            if (start){
                                 start = false;
-                                str += f;
-                                str1 += f;
+                                str += "Main";
+                                str1 += "_";
                             }else {
-                                str += "#!" +f;
-                                str1 += "#!" +f;
+                                str += "#!"+"Main";
+                                str1 += "#!"+"_";
                             }
+                        }else if (start){
+                            start = false;
+                            str += f;
+                            str1 += f;
+                        }else {
+                            str += "#!" +f;
+                            str1 += "#!" +f;
                         }
-                        String[] filerstop = str.split("#!");
-                        String[] filerstop1 = str1.split("#!");
+                    }
+                    String[] filerstop = str.split("#!");
+                    String[] filerstop1 = str1.split("#!");
 
-                        new MaterialAlertDialogBuilder(PrimaryActivity.this)
-                                .setTitle("Фильтры популярные сейчас")
-                                .setPositiveButton("Хорошо", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                    }
-                                })
-                                .setItems(filerstop, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        if (filerstop1[i].equals("_")) {
-                                            filters.setText("");
-                                        }else{
-                                            filters.setText(filerstop1[i]);
-                                        }
-                                        listView.setAdapter(null);
-                                        posts.clear();
-                                        allposts.clear();
-                                        reference.child("welta").child("chat").addChildEventListener(childEventListener());
-                                    }
-                                })
-                                .create()
-                                .show();
-                        return true;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + item.getItemId());
-                }
+                    new MaterialAlertDialogBuilder(PrimaryActivity.this)
+                            .setTitle("Filters popular now")
+                            .setPositiveButton("Okay", (dialogInterface, i) -> dialogInterface.dismiss())
+                            .setItems(filerstop, (dialogInterface, i) -> {
+                                if (filerstop1[i].equals("_")) {
+                                    filters.setText("");
+                                }else{
+                                    filters.setText(filerstop1[i]);
+                                }
+                                listView.setAdapter(null);
+                                posts.clear();
+                                allposts.clear();
+                                reference.child("welta").child("chat").addChildEventListener(childEventListener());
+                            })
+                            .create()
+                            .show();
+                    return true;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + item.getItemId());
             }
         });
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (id == null) {
-                    reference.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("id").get()
-                            .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.e("firebase", "Error getting data", task.getException());
-                                    } else {
-                                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                                        id = String.valueOf(task.getResult().getValue());
-                                        reference.child("welta").child("chat").push().setValue(new Post(id, message.getText().toString(), String.valueOf(System.currentTimeMillis()), filters.getText().toString()));
+        send.setOnClickListener(view -> {
+            if (id == null) {
+                reference.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("id").get()
+                        .addOnCompleteListener(task -> {
+                            if (!task.isSuccessful()) {
+                                Log.e("firebase", "Error getting data", task.getException());
+                            } else {
+                                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                                id = String.valueOf(task.getResult().getValue());
+                                reference.child("welta").child("chat").push().setValue(new Post(id, message.getText().toString(), String.valueOf(System.currentTimeMillis()), filters.getText().toString()));
 
-                                        message.setText("");
-                                    }
-                                }
-                            });
-                } else {
-                    reference.child("welta").child("chat").push().setValue(new Post(id, message.getText().toString(), String.valueOf(System.currentTimeMillis()), filters.getText().toString()));
-                    message.setText("");
-                }
-
+                                message.setText("");
+                            }
+                        });
+            } else {
+                reference.child("welta").child("chat").push().setValue(new Post(id, message.getText().toString(), String.valueOf(System.currentTimeMillis()), filters.getText().toString()));
+                message.setText("");
             }
+
         });
     }
     ChildEventListener childEventListener(){

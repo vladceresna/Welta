@@ -13,7 +13,7 @@
             android:id="@+id/toolbarab"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="О программе"
+            app:title="About Welta"
             app:titleTextColor="@color/white"
             />
     </com.google.android.material.appbar.AppBarLayout>
@@ -46,13 +46,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Версия 0.4.1"/>
+                    android:text="Version 0.5"/>
                 <TextView
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Copyright © Vlad Chereshnya (Rula), 2023"
+                    android:text="Copyright © Vlad Ceresna (Rula), 2023-2025"
                     android:layout_marginBottom="20dp"/>
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
@@ -63,13 +63,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:text="Создатель"
+                        android:text="Creater"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:textSize="20dp"
                         android:textColor="@color/black"
-                        android:text="Vlad Chereshnya"
+                        android:text="Vlad Ceresna"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:text="Платформа"
+                        android:text="Platform"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textStyle="bold"
-                        android:text="Отзыв/Помощь"
+                        android:text="Support/Feedback"
                         android:textSize="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
@@ -115,7 +115,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:layout_marginTop="10dp"
-                            android:text="Telegram бот обратной связи"
+                            android:text="Feedback Telegram bot"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                         <TextView
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:layout_marginTop="10dp"
-                            android:text="Написать нам"
+                            android:text="Write us"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                         <TextView
@@ -152,7 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:text="Политика конфиденциальности и\nУсловия системы Rula"
+                        android:text="Privacy policy and terms of use Rula"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -160,7 +160,7 @@
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:layout_marginTop="10dp"
-                        android:text="Политика конфиденциальности"
+                        android:text="Privacy policy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -168,7 +168,7 @@
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:layout_marginTop="10dp"
-                        android:text="Условия"
+                        android:text="Terms of use"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -183,18 +183,18 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textStyle="bold"
-                        android:text="Иной наш софт"
+                        android:text="Other our software"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:layout_marginTop="10dp"
-                        android:text="Официальный сайт"
+                        android:text="Official website"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:textSize="20dp"
                         android:textColor="@color/black"
-                        android:text="rulav.repl.co"
+                        android:text="https://retrula.netlify.app/"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>

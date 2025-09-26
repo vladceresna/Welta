@@ -25,37 +25,12 @@ public class AboutActivity extends AppCompatActivity {
         bprivpoll = findViewById(R.id.bprivpoll);
         bterms = findViewById(R.id.bterms);
 
-        bprivpoll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tosite("https://rulav.repl.co/privacypolicy/rulaprivacypolicy.html");
-            }
-        });
-        bterms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tosite("https://rulav.repl.co/terms/rulaterms.html");
-            }
-        });
+        bprivpoll.setOnClickListener(view -> tosite("https://retrula.netlify.app/privacypolicy/rulaprivacypolicy.html"));
+        bterms.setOnClickListener(view -> tosite("https://retrula.netlify.app/terms/rulaterms.html"));
 
-        buttelbot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tosite("https://t.me/rula_support_bot/");
-            }
-        });
-        butusmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tosite("mailto:vladceresna6@gmail.com");
-            }
-        });
-        butofsite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tosite("https://rulav.repl.co");
-            }
-        });
+        buttelbot.setOnClickListener(view -> tosite("https://t.me/rula_support_bot/"));
+        butusmail.setOnClickListener(view -> tosite("mailto:vladceresna6@gmail.com"));
+        butofsite.setOnClickListener(view -> tosite("https://rulav.repl.co"));
     }
     private void tosite(String url){
         intent.setData(Uri.parse(url));

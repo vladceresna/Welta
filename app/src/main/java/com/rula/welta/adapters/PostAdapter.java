@@ -53,32 +53,29 @@ public class PostAdapter extends BaseAdapter {
         }
         Post post = (Post) getItem(i);
 
-        LinearLayout lspace = (LinearLayout) view.findViewById(R.id.lspace);
-        LinearLayout rspace = (LinearLayout) view.findViewById(R.id.rspace);
+        LinearLayout lspace = view.findViewById(R.id.lspace);
+        LinearLayout rspace = view.findViewById(R.id.rspace);
 
-        TextView textname = (TextView) view.findViewById(R.id.textname);
-        TextView textmessage = (TextView) view.findViewById(R.id.textmessage);
-        TextView texttime = (TextView) view.findViewById(R.id.texttime);
+        TextView textname = view.findViewById(R.id.textname);
+        TextView textmessage = view.findViewById(R.id.textmessage);
+        TextView texttime = view.findViewById(R.id.texttime);
 
-        textname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    if(context.getPackageManager().getPackageInfo("com.rula.rosto",0) != null){
-                        context.startActivity(new Intent().setClassName("com.rula.rosto", "com.rula.rosto.UserProfileActivity").putExtra("id", post.getSenderid()));
-                    }else{
-                        new MaterialAlertDialogBuilder(context)
-                                .setTitle("Приложение Rosto не обнаружено")
-                                .setMessage("Приложение Rosto нужно для нормального функционирования ретсистемы Rula. В нем находятся общие функции системы, такие как действия с профилями, и т.д. Установить его можна с нашего официального сайта rulav.repl.co")
-                                .setPositiveButton("Хорошо", null).show();
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
+        textname.setOnClickListener(view1 -> {
+            try {
+                if(context.getPackageManager().getPackageInfo("com.rula.rosto",0) != null){
+                    context.startActivity(new Intent().setClassName("com.rula.rosto", "com.rula.rosto.UserProfileActivity").putExtra("id", post.getSenderid()));
+                }else{
                     new MaterialAlertDialogBuilder(context)
-                            .setTitle("Приложение Rosto не обнаружено")
-                            .setMessage("Приложение Rosto нужно для нормального функционирования ретсистемы Rula. В нем находятся общие функции системы, такие как действия с профилями, и т.д. Установить его можна с нашего официального сайта rulav.repl.co")
-                            .setPositiveButton("Хорошо", null).show();
-                    e.printStackTrace();
+                            .setTitle("Rosto application not found")
+                            .setMessage("The Rosto application is required for the normal functioning of the Rula ret system. It contains general system functions, such as profile management, etc. You can install it from our official website https://retrula.netlify.app/")
+                            .setPositiveButton("Okay", null).show();
                 }
+            } catch (PackageManager.NameNotFoundException e) {
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle("Rosto application not found")
+                        .setMessage("The Rosto application is required for the normal functioning of the Rula ret system. It contains general system functions, such as profile management, etc. You can install it from our official website https://retrula.netlify.app/")
+                        .setPositiveButton("Okay", null).show();
+                e.printStackTrace();
             }
         });
         textname.setText(post.getSenderid());
